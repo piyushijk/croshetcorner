@@ -8,11 +8,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { createServerSupabase } from "@/lib/supabase/server";
-import { mockProducts, mockCategories } from "@/lib/mock-data";
 
 export const revalidate = 60;
-
-// ... (other constants omitted for brevity in replace, let's just replace the component definition)
 
 const categoryCards = [
   {
@@ -43,9 +40,9 @@ const categoryCards = [
 
 const valueProps = [
   { icon: Heart, title: "100% handmade", text: "Every stitch is made by hand, never machine-made." },
-  { icon: Palette, title: "Your colourway", text: "Pick your yarn shades and we match them." },
-  { icon: Gift, title: "Gift-ready packing", text: "Eco wrap, ribbon and a little note included." },
-  { icon: Leaf, title: "Direct to artisan", text: "You support a small Bikaner studio, not a factory." },
+  { icon: Palette, title: "Your colourway", text: "Pick your yarn shades and we will match them." },
+  { icon: Gift, title: "Gift-ready packing", text: "Ecofriendly packaging, ribbon and a little note included." },
+  { icon: Leaf, title: "Direct to artisan", text: "You are supporting a small Bikaner studio, not a factory." },
 ];
 
 const steps = [
@@ -90,8 +87,8 @@ const faqs = [
 
 export default async function HomePage() {
   const supabase = createServerSupabase();
-  let featured = [];
-  let categories = [];
+  let featured: any[] = [];
+  let categories: any[] = [];
   
   try {
     const [prodRes, catRes] = await Promise.all([
@@ -99,28 +96,24 @@ export default async function HomePage() {
         .from('products')
         .select(`*, categories(id, name, slug)`)
         .eq('featured', true)
+        .order('created_at', { ascending: false })
         .limit(6),
       supabase.from('categories').select('*').order('created_at', { ascending: true })
     ]);
       
-    if (prodRes.error || !prodRes.data || prodRes.data.length === 0) {
-      featured = mockProducts.filter(p => p.is_featured);
-    } else {
+    if (!prodRes.error && prodRes.data) {
       featured = prodRes.data;
     }
 
-    if (catRes.error || !catRes.data || catRes.data.length === 0) {
-      categories = mockCategories;
-    } else {
+    if (!catRes.error && catRes.data) {
       categories = catRes.data;
     }
   } catch (e) {
-    featured = mockProducts.filter(p => p.is_featured);
-    categories = mockCategories;
+    console.error("Failed to load homepage data:", e);
   }
 
   return (
-    <div className="pb-24 md:pb-0">
+    <div>
       {/* Hero */}
       <section className="bg-hero-wash">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 md:py-20">
@@ -133,7 +126,7 @@ export default async function HomePage() {
             </h1>
             <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground">
               Crochet bouquets that never wilt, granny square bags, tiny desk buddies and cosy
-              décor — all made by hand, in the colours you choose.
+              décor - Everything made by hand, in the colours you choose.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link href="/shop" className="inline-flex h-12 w-full sm:w-auto items-center justify-center rounded-xl bg-primary px-8 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90">
@@ -192,12 +185,9 @@ export default async function HomePage() {
               <Link
                 key={c.slug}
                 href={`/shop?category=${c.slug}`}
-                className="group overflow-hidden rounded-3xl border border-accent bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift p-8 text-center flex flex-col items-center justify-center min-h-[160px]"
+                className="group overflow-hidden rounded-3xl border border-accent bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift p-8 text-center flex flex-col items-center justify-center min-h-[140px]"
               >
                 <h3 className="font-display text-xl font-semibold text-berry group-hover:text-primary transition-colors">{c.name}</h3>
-                <span className="mt-2 text-sm text-muted-foreground underline decoration-transparent group-hover:decoration-primary/30 transition-all">
-                  Shop now &rarr;
-                </span>
               </Link>
             ))}
           </div>
@@ -240,7 +230,7 @@ export default async function HomePage() {
 
       {/* Reviews */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <h2 className="font-display text-3xl font-semibold text-berry">Little love notes</h2>
+        <h2 className="font-display text-3xl font-semibold text-berry">Customer Reviews</h2>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {reviews.map((r) => (
             <blockquote
@@ -261,7 +251,7 @@ export default async function HomePage() {
 
       {/* FAQ */}
       <section className="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
-        <h2 className="font-display text-3xl font-semibold text-berry">Questions, answered</h2>
+        <h2 className="font-display text-3xl font-semibold text-berry">FAQs</h2>
         <Accordion type="single" collapsible className="mt-6">
           {faqs.map((f) => (
             <AccordionItem key={f.q} value={f.q} className="border-border/70">

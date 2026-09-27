@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { MessageCircle, ShoppingBag, Menu, X } from "lucide-react";
+import { ShoppingBag, Menu, X } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { useState, useEffect } from "react";
 
@@ -27,17 +27,17 @@ export default function Navbar() {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           
           {/* Brand */}
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
             <img
               src="/images/logo.jpg"
               alt="Crochet Corner Logo"
-              className="h-10 w-10 sm:h-11 sm:w-11 rounded-full object-cover border border-border/60 shadow-xs"
+              className="h-10 w-10 sm:h-11 sm:w-11 rounded-full object-cover border border-border/70 shadow-xs shrink-0"
             />
-            <div className="flex flex-col">
-              <span className="font-display text-lg sm:text-xl font-bold leading-tight text-berry group-hover:text-primary transition-colors">
+            <div className="flex flex-col justify-center">
+              <span className="font-display text-lg sm:text-xl font-bold tracking-tight leading-none text-berry group-hover:text-primary transition-colors">
                 Crochet Corner
               </span>
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+              <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-muted-foreground/80 leading-none mt-1">
                 Bikaner, Rajasthan
               </span>
             </div>
@@ -92,11 +92,16 @@ export default function Navbar() {
                 <img
                   src="/images/logo.jpg"
                   alt="Crochet Corner Logo"
-                  className="h-9 w-9 rounded-full object-cover border border-border/60"
+                  className="h-10 w-10 rounded-full object-cover border border-border/70 shrink-0"
                 />
-                <span className="font-display text-lg font-bold leading-tight text-berry">
-                  Crochet Corner
-                </span>
+                <div className="flex flex-col justify-center">
+                  <span className="font-display text-lg font-bold leading-none text-berry">
+                    Crochet Corner
+                  </span>
+                  <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground/80 leading-none mt-1">
+                    Bikaner, Rajasthan
+                  </span>
+                </div>
               </Link>
               <button 
                 onClick={closeDrawer}
@@ -112,16 +117,6 @@ export default function Navbar() {
               <Link href="/care-guide" onClick={closeDrawer} className="flex h-11 items-center text-lg font-semibold transition-colors hover:text-berry">Care Guide</Link>
               <Link href="/about" onClick={closeDrawer} className="flex h-11 items-center text-lg font-semibold transition-colors hover:text-berry">About</Link>
               <Link href="/faq" onClick={closeDrawer} className="flex h-11 items-center text-lg font-semibold transition-colors hover:text-berry">FAQ</Link>
-            </div>
-            
-            <div className="mt-auto pt-6 border-t border-border/50">
-              <Link
-                href="/custom-orders"
-                onClick={closeDrawer}
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-whatsapp px-4 text-base font-semibold text-whatsapp-foreground transition-colors hover:bg-whatsapp/90"
-              >
-                <MessageCircle className="h-5 w-5" /> Chat with us
-              </Link>
             </div>
           </div>
         </div>

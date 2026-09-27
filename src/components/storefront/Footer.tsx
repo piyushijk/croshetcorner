@@ -48,8 +48,7 @@ export default function Footer() {
         <div>
           <h3 className="font-serif text-xl font-bold text-berry mb-4">Crochet Corner</h3>
           <p className="text-sm text-foreground/80 leading-relaxed">
-            Stitched with love, made to keep. Artisan handmade crochet studio focusing on bespoke creations for gifting, personal accessories, and cozy home décor.
-          </p>
+Stitched with love, made to keep. Artisan handmade crochet studio focusing on custom made pieces for unique gifting , cozy decoration and timeless crafts.          </p>
         </div>
         <div>
           <h4 className="font-semibold mb-4 text-foreground">Quick Links</h4>
@@ -57,15 +56,15 @@ export default function Footer() {
             <li><Link href="/shop" className="hover:text-primary transition-colors">Catalog</Link></li>
             <li><Link href="/custom-orders" className="hover:text-primary transition-colors">Custom Commissions</Link></li>
             <li><Link href="/care-guide" className="hover:text-primary transition-colors">Care Guide</Link></li>
-            <li><Link href="/admin" className="hover:text-primary transition-colors">Admin Console</Link></li>
+            <li><Link href="/faq" className="hover:text-primary transition-colors">FAQs</Link></li>
             <li>
               <a
                 href={DEVELOPER_LINKEDIN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-primary font-bold text-xs tracking-wider uppercase text-foreground/90 transition-colors inline-block"
+                className="hover:text-primary font-normal text-xs tracking-wider uppercase text-foreground/80 transition-colors inline-block"
               >
-                DEVELOPER
+                Developer
               </a>
             </li>
           </ul>
@@ -98,15 +97,21 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-4 mt-12 text-center text-xs text-foreground/50 space-y-1.5">
-        <p>&copy; {new Date().getFullYear()} Crochet Corner. All rights reserved.</p>
-        <p className="text-foreground/70">
+      <div className="container mx-auto px-4 mt-12 pt-6 border-t border-greige/40 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-foreground/60">
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+          <span>&copy; {new Date().getFullYear()} Crochet Corner. All rights reserved.</span>
+          <span className="hidden sm:inline text-foreground/30">•</span>
+          <Link href="/admin" className="hover:text-primary transition-colors underline-offset-4 hover:underline">
+            Admin Console
+          </Link>
+        </div>
+        <p className="text-foreground/70 text-center sm:text-right">
           Want to make your own site?{" "}
           <a
             href={DEVELOPER_LINKEDIN_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-foreground hover:text-primary transition-colors underline underline-offset-4"
+            className="font-normal text-foreground hover:text-primary transition-colors underline underline-offset-4"
           >
             Click here &rarr;
           </a>

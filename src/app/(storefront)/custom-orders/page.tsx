@@ -50,13 +50,19 @@ export default function CustomOrdersPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-2xl">
-      <div className="text-center mb-10">
-        <h1 className="font-serif text-4xl font-bold mb-4">Commission a Piece</h1>
-        <p className="text-foreground/70">
-          Want something unique? Fill out the details below to generate a pre-filled WhatsApp message. We'll discuss feasibility and quote.
-        </p>
-      </div>
+    <div className="w-full py-10 sm:py-14 md:py-18">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-3xl text-left">
+        <div className="text-left mb-8 sm:mb-10">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary mb-3">
+            Bespoke Creations
+          </span>
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-berry mb-3">
+            Commission a Piece
+          </h1>
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl">
+            Want something unique? Fill out the details below to generate a pre-filled WhatsApp message. We'll discuss feasibility and quote.
+          </p>
+        </div>
 
       <div className="bg-white p-6 md:p-8 rounded-3xl border border-greige/50 shadow-sm">
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -67,7 +73,7 @@ export default function CustomOrdersPage() {
               <input 
                 type="text" 
                 name="name"
-                placeholder="Jane Doe"
+                placeholder="Krishna"
                 className="w-full border border-greige/50 rounded-xl p-3 bg-alabaster/10 focus:outline-none focus:ring-2 focus:ring-primary"
                 required 
               />
@@ -127,14 +133,16 @@ export default function CustomOrdersPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold mb-2">Estimated Size/Qty</label>
-              <input 
-                type="text" 
+              <label className="block text-sm font-semibold mb-2">Estimated Size</label>
+              <select 
                 name="size"
-                
-                placeholder="e.g. Adult Medium / 1 piece"
-                className="w-full border border-greige/50 rounded-xl p-3 bg-alabaster/10 focus:outline-none focus:ring-2 focus:ring-rosewood" 
-              />
+                defaultValue="Medium"
+                className="w-full border border-greige/50 rounded-xl p-3 bg-white focus:outline-none focus:ring-2 focus:ring-rosewood text-foreground cursor-pointer"
+              >
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+              </select>
             </div>
             <div>
               <label className="block text-sm font-semibold mb-2">Target Date (Optional)</label>
@@ -157,6 +165,7 @@ export default function CustomOrdersPage() {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 }

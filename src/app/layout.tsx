@@ -36,7 +36,14 @@ export default function RootLayout({
           <CartDrawer />
           <main className="flex-1 flex flex-col">{children}</main>
           <Footer />
-          <Toaster position="bottom-center" toastOptions={{ className: 'font-sans' }} />
+          <Toaster 
+            position="bottom-center"
+            richColors={false}
+            toastOptions={{
+              className: '!bg-[#FFFDF9] !text-[#3D2E2B] !border !border-[#E8DFD8] !shadow-[0_12px_36px_-12px_rgba(80,50,40,0.2)] !rounded-2xl !font-sans !py-3.5 !px-4 !text-sm !font-medium',
+              descriptionClassName: '!text-[#7A6B65]',
+            }}
+          />
         </CartProvider>
       </body>
     </html>

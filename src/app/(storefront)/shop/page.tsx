@@ -1,8 +1,7 @@
 import { createServerSupabase } from "@/lib/supabase/server";
 import ProductCard from "@/components/storefront/ProductCard";
-import { mockProducts, mockCategories } from "@/lib/mock-data";
 
-export const revalidate = 60; // Disable cache so edits show instantly
+export const revalidate = 60;
 
 export default async function ShopPage({
   searchParams,
@@ -13,11 +12,8 @@ export default async function ShopPage({
   const supabase = createServerSupabase();
   
   // Fetch categories for pills
-  const { data: dbCategories, error: catError } = await supabase.from('categories').select('*');
-  let categories = dbCategories;
-  if (catError || !dbCategories || dbCategories.length === 0) {
-    categories = mockCategories;
-  }
+  const { data: dbCategories } = await supabase.from('categories').select('*').order('created_at', { ascending: true });
+  const categories = dbCategories || [];
   
   // Fetch products based on category filter
   let query = supabase.from('products').select('*, categories(*)');
@@ -25,14 +21,8 @@ export default async function ShopPage({
     query = query.eq('categories.slug', category);
   }
   
-  const { data: dbProducts, error } = await query.order('created_at', { ascending: false });
-  let products = dbProducts;
-  if (error || !dbProducts || dbProducts.length === 0) {
-    products = mockProducts;
-    if (category && category !== 'all') {
-      products = mockProducts.filter((p: any) => p.categories?.slug === category);
-    }
-  }
+  const { data: dbProducts } = await query.order('created_at', { ascending: false });
+  const products = dbProducts || [];
 
   return (
     <div className="container mx-auto px-4 py-8">

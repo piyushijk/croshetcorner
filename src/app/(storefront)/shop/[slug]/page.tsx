@@ -1,50 +1,49 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { formatINR } from "@/lib/utils";
-import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { createProductOrderUrl } from "@/lib/whatsapp";
-import { MessageCircle, Clock, Heart, ShieldCheck } from "lucide-react";
-
-import { mockProducts } from "@/lib/mock-data";
+import { Clock, Heart } from "lucide-react";
 import AddToCartForm from "@/components/storefront/AddToCartForm";
 
 export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
   const supabase = createServerSupabase();
-  let { data: product, error } = await supabase
+  const { data: product, error } = await supabase
     .from('products')
     .select('*, categories(*)')
     .eq('slug', params.slug)
     .single();
 
   if (error || !product) {
-    product = mockProducts.find(p => p.slug === params.slug) as any;
-  }
-
-  if (!product) {
     notFound();
   }
 
-  // Fallback to example.com in dev if VERCEL_URL is not set
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || `https://${process.env.VERCEL_URL}` || 'http://localhost:3000';
-  const productUrl = `${baseUrl}/shop/${product.slug}`;
-  const whatsappUrl = createProductOrderUrl(product.title, product.price, productUrl);
-
   return (
-    <div className="container mx-auto px-4 py-8 pb-32 md:pb-8">
+    <div className="container mx-auto px-4 py-8">
       <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
         {/* Gallery */}
         <div className="space-y-4">
-          <div className="aspect-[4/5] bg-alabaster rounded-3xl overflow-hidden border border-greige/30">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={product.images[0] || "https://images.unsplash.com/photo-1596431976077-6cb56e87d0c7?auto=format&fit=crop&q=80&w=800"} alt={product.title} className="w-full h-full object-cover" />
+          <div className="aspect-[4/5] bg-alabaster rounded-3xl overflow-hidden border border-greige/30 relative">
+            <Image
+              src={product.images?.[0] || "https://images.unsplash.com/photo-1596431976077-6cb56e87d0c7?auto=format&fit=crop&q=80&w=800"}
+              alt={product.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+            />
           </div>
           {product.images.length > 1 && (
             <div className="grid grid-cols-4 gap-2">
               {product.images.slice(1).map((img: string, i: number) => (
-                <div key={i} className="aspect-square rounded-xl overflow-hidden bg-alabaster border border-greige/30">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={img} alt="" className="w-full h-full object-cover" />
+                <div key={i} className="aspect-square rounded-xl overflow-hidden bg-alabaster border border-greige/30 relative">
+                  <Image
+                    src={img}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="25vw"
+                  />
                 </div>
               ))}
             </div>

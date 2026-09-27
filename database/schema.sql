@@ -26,12 +26,14 @@ CREATE TABLE products (
 -- Create custom_inquiries table
 CREATE TABLE custom_inquiries (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  customer_name text NOT NULL,
+  name text,                        -- customer name (from custom-orders form)
+  customer_name text,               -- legacy alias, kept for compatibility
   phone text NOT NULL,
   idea_description text NOT NULL,
   preferred_colors text,
   estimated_size text,
   target_date date,
+  notes text,                       -- stores address + pincode info
   status text DEFAULT 'New',
   created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
 );

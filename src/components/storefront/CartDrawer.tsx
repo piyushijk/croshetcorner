@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useCart } from "@/lib/cart";
 import { formatINR, createCartCheckoutUrl } from "@/lib/whatsapp";
 import { X, Minus, Plus, ShoppingBag, Gift, ArrowLeft, MapPin } from "lucide-react";
@@ -150,7 +151,7 @@ export function CartDrawer() {
                     <div key={`${item.id}-${item.selectedColor || ''}`} className="flex gap-4 group">
                       <div className="relative h-24 w-20 overflow-hidden rounded-xl bg-muted shrink-0 border border-border/50">
                         {item.image ? (
-                          <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                          <Image src={item.image} alt={item.title} fill className="object-cover" sizes="80px" />
                         ) : (
                           <div className="w-full h-full bg-accent" />
                         )}

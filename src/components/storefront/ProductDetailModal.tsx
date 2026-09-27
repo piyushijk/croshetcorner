@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { X, ChevronLeft, ChevronRight, MessageCircle, ShoppingBag, Clock, Heart, ShieldCheck } from "lucide-react";
+import Image from "next/image";
+import { X, ChevronLeft, ChevronRight, ShoppingBag, Clock, Heart } from "lucide-react";
 import { formatINR, createProductOrderUrl } from "@/lib/whatsapp";
 import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { supabase } from "@/lib/supabase/client";
-import { mockProducts } from "@/lib/mock-data";
 import { toast } from "sonner";
 
 export function ProductDetailModal({ initialProduct, onClose }: { initialProduct: any, onClose: () => void }) {
@@ -27,31 +27,27 @@ export function ProductDetailModal({ initialProduct, onClose }: { initialProduct
     setImageIndex(0);
     setQuantity(1);
     
-    // Fetch related products
+    // Fetch related products dynamically from Supabase
     async function fetchRelated() {
-      if (activeProduct.category_id || activeProduct.categories?.id) {
+      try {
         const catId = activeProduct.category_id || (activeProduct.categories as any)?.id;
-        const { data, error } = await supabase
+        let query = supabase
           .from('products')
           .select('*, categories(*)')
-          .eq('category_id', catId)
-          .neq('id', activeProduct.id)
-          .limit(4);
-          
-        if (!error && data && data.length > 0) {
+          .neq('id', activeProduct.id);
+        
+        if (catId) {
+          query = query.eq('category_id', catId);
+        }
+
+        const { data, error } = await query.limit(4);
+        if (!error && data) {
           setRelated(data);
         } else {
-          // Fallback
-          const mockCatId = activeProduct.category_id || (activeProduct.categories as any)?.id;
-          const relatedMocks = mockProducts.filter(p => 
-            (p.category_id === mockCatId || (p.categories as any)?.id === mockCatId || p.categories?.slug === activeProduct.categories?.slug) 
-            && p.id !== activeProduct.id
-          ).slice(0, 4);
-          setRelated(relatedMocks);
+          setRelated([]);
         }
-      } else {
-        const relatedMocks = mockProducts.filter(p => p.id !== activeProduct.id).slice(0, 4);
-        setRelated(relatedMocks);
+      } catch (err) {
+        setRelated([]);
       }
     }
     fetchRelated();
@@ -104,10 +100,13 @@ export function ProductDetailModal({ initialProduct, onClose }: { initialProduct
           <div className="w-full md:w-1/2 flex-shrink-0">
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-muted border border-border/50 group">
               {images.length > 0 ? (
-                <img 
-                  src={images[imageIndex]} 
-                  alt={activeProduct.title} 
-                  className="h-full w-full object-cover transition-all"
+                <Image
+                  src={images[imageIndex]}
+                  alt={activeProduct.title}
+                  fill
+                  className="object-cover transition-all"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
                 />
               ) : (
                 <div className="w-full h-full bg-muted" />
@@ -202,11 +201,13 @@ export function ProductDetailModal({ initialProduct, onClose }: { initialProduct
                   className="group cursor-pointer rounded-2xl border border-border/50 bg-card overflow-hidden hover:border-primary/50 transition-colors shadow-sm"
                   onClick={() => setActiveProduct(rel)}
                 >
-                  <div className="aspect-square bg-muted overflow-hidden">
-                    <img 
-                      src={rel.images?.[0]} 
-                      alt={rel.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  <div className="aspect-square bg-muted overflow-hidden relative">
+                    <Image
+                      src={rel.images?.[0] || ""}
+                      alt={rel.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 768px) 50vw, 25vw"
                     />
                   </div>
                   <div className="p-3">

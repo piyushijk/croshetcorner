@@ -4,6 +4,8 @@ import { Minus, Plus, ShoppingBag } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/Button";
 import { formatINR } from "@/lib/whatsapp";
+import { toast } from "sonner";
+
 
 export default function AddToCartForm({ product }: { product: any }) {
   const [quantity, setQuantity] = useState(1);
@@ -17,6 +19,8 @@ export default function AddToCartForm({ product }: { product: any }) {
       quantity,
       image: product.images?.[0]
     });
+    toast.success(`Added ${quantity}x ${product.title} to your bag! 🧶`);
+    setQuantity(1);
   };
 
   return (
