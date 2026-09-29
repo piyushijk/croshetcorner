@@ -100,10 +100,6 @@ Stitched with love, made to keep. Artisan handmade crochet studio focusing on cu
       <div className="container mx-auto px-4 mt-12 pt-6 border-t border-greige/40 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-foreground/60">
         <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
           <span>&copy; {new Date().getFullYear()} Crochet Corner. All rights reserved.</span>
-          <span className="hidden sm:inline text-foreground/30">•</span>
-          <Link href="/admin" className="hover:text-primary transition-colors underline-offset-4 hover:underline">
-            Admin Console
-          </Link>
         </div>
         <p className="text-foreground/70 text-center sm:text-right">
           Want to make your own site?{" "}

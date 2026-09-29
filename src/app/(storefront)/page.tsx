@@ -46,9 +46,9 @@ const valueProps = [
 ];
 
 const steps = [
-  { n: "01", title: "Browse & pick", text: "Find a piece you love, or bring us your own idea." },
+  { n: "01", title: "Browse & Pick", text: "Find a piece you love, or bring us your own idea." },
   { n: "02", title: "Chat on WhatsApp", text: "Confirm colours, size, delivery date and price." },
-  { n: "03", title: "Stitched & shipped", text: "We crochet it with care and post it to your door." },
+  { n: "03", title: "Stitched & Shipped", text: "We crochet it with care and post it to your door." },
 ];
 
 const reviews = [

@@ -31,7 +31,7 @@ export default function AdminLogin() {
       try {
         localStorage.setItem("cc-admin-authenticated", "true");
       } catch (e) {}
-      router.push("/admin");
+      router.push("/krishnaisadmin");
       return;
     }
 
@@ -54,7 +54,7 @@ export default function AdminLogin() {
         return;
       }
 
-      router.push("/admin");
+      router.push("/krishnaisadmin");
     } catch (err: any) {
       setError(err?.message || "Failed to communicate with authentication server.");
       setLoading(false);

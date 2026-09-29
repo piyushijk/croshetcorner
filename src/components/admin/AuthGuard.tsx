@@ -36,10 +36,10 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
         if (session?.user) {
           setUser(session.user);
         } else {
-          router.replace("/admin/login");
+          router.replace("/krishnaisadmin/login");
         }
       } catch (e) {
-        router.replace("/admin/login");
+        router.replace("/krishnaisadmin/login");
       }
       setChecking(false);
     };
@@ -50,7 +50,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       if (session?.user) {
         setUser(session.user);
       } else if (!isPlaceholderSupabase) {
-        router.replace("/admin/login");
+        router.replace("/krishnaisadmin/login");
       }
     });
 

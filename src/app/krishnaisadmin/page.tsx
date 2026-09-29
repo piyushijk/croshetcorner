@@ -287,7 +287,7 @@ export default function AdminConsole() {
                   localStorage.removeItem("cc-admin-authenticated");
                 } catch {}
                 await supabase.auth.signOut();
-                router.push("/admin/login");
+                router.push("/krishnaisadmin/login");
               }}
               className="text-red-500 hover:text-red-600 hover:bg-red-50"
             >
